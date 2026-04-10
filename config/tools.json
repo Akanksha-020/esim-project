@@ -1,0 +1,64 @@
+{
+  "tools": {
+    "ngspice": {
+      "name": "Ngspice",
+      "description": "Open-source circuit simulator for eSim",
+      "category": "simulator",
+      "current_version": null,
+      "latest_version": "40",
+      "windows_download_url": "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/40/",
+      "linux_download_url": "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/40/",
+      "macos_download_url": "https://sourceforge.net/projects/ngspice/files/ng-spice-rework/40/",
+      "windows_filename": "ngspice-40-x64.zip",
+      "dependencies": [],
+      "path_to_executable": "bin/ngspice.exe",
+      "env_var_name": "NGSPICE_PATH",
+      "installed": false,
+      "install_path": null,
+      "checksum": "sha256:abc123..."
+    },
+    "kicad": {
+      "name": "KiCad",
+      "description": "Open-source PCB design and EDA suite",
+      "category": "pcb_design",
+      "current_version": null,
+      "latest_version": "7.0.2",
+      "windows_download_url": "https://kicad.org/download/windows/",
+      "linux_download_url": "https://kicad.org/download/linux/",
+      "macos_download_url": "https://kicad.org/download/macos/",
+      "windows_filename": "kicad-7.0.2-x64.exe",
+      "dependencies": [],
+      "path_to_executable": "bin/kicad.exe",
+      "env_var_name": "KICAD_PATH",
+      "installed": false,
+      "install_path": null,
+      "checksum": "sha256:def456..."
+    },
+    "python": {
+      "name": "Python",
+      "description": "Python runtime environment",
+      "category": "runtime",
+      "current_version": null,
+      "latest_version": "3.11.8",
+      "windows_download_url": "https://www.python.org/ftp/python/3.11.8/",
+      "dependencies": [],
+      "path_to_executable": "python.exe",
+      "env_var_name": "PYTHON_PATH",
+      "installed": false,
+      "install_path": null
+    },
+    "graphviz": {
+      "name": "Graphviz",
+      "description": "Graph visualization software",
+      "category": "visualization",
+      "current_version": null,
+      "latest_version": "9.0.0",
+      "windows_download_url": "https://gitlab.com/graphviz/graphviz/-/releases/9.0.0",
+      "dependencies": [],
+      "path_to_executable": "bin/dot.exe",
+      "env_var_name": "GRAPHVIZ_PATH",
+      "installed": false,
+      "install_path": null
+    }
+  }
+}

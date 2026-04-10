@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "vcredist": {
+      "name": "Microsoft Visual C++ Redistributable",
+      "description": "Required for many applications",
+      "windows_download_url": "https://support.microsoft.com/en-us/help/2977003/",
+      "windows_filename": "vc_redist.x64.exe",
+      "version": "2022",
+      "required_by": ["ngspice"],
+      "installed": false
+    },
+    "dotnet": {
+      "name": ".NET Framework",
+      "description": "Microsoft .NET runtime",
+      "windows_download_url": "https://dotnet.microsoft.com/download",
+      "version": "4.8+",
+      "required_by": [],
+      "installed": false
+    },
+    "git": {
+      "name": "Git",
+      "description": "Version control system",
+      "windows_download_url": "https://git-scm.com/download/win",
+      "windows_filename": "Git-2.43.0-64-bit.exe",
+      "version": "2.40+",
+      "required_by": [],
+      "installed": false
+    }
+  }
+}

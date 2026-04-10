@@ -1,0 +1,29 @@
+{
+  "system": {
+    "installation_directory": "C:\\eSim\\Tools",
+    "log_directory": "./logs",
+    "config_directory": "./config",
+    "auto_check_updates": true,
+    "update_check_interval_days": 7,
+    "download_timeout_seconds": 300,
+    "verify_checksums": true,
+    "retry_attempts": 3,
+    "retry_delay_seconds": 5
+  },
+  "platform": "windows",
+  "python_version": "3.8+",
+  "logging": {
+    "level": "INFO",
+    "format": "[%(asctime)s] [%(levelname)s] %(message)s",
+    "date_format": "%Y-%m-%d %H:%M:%S",
+    "file_name": "tool_manager.log",
+    "max_file_size_mb": 10,
+    "backup_count": 5
+  },
+  "features": {
+    "auto_update": false,
+    "dependency_resolution": true,
+    "environment_variable_setup": true,
+    "checksums_verification": true
+  }
+}
