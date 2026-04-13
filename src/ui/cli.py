@@ -4,6 +4,7 @@ Provides user-friendly commands for tool management
 """
 
 import sys
+import shlex
 import click
 from tabulate import tabulate
 from typing import Optional
@@ -299,7 +300,53 @@ def system_info():
 def main():
     """Main entry point"""
     try:
-        cli()
+        # If no command args are supplied, launch an interactive prompt.
+        if len(sys.argv) == 1:
+            if not sys.stdin.isatty():
+                click.echo("✗ Interactive mode requires a terminal. Use 'python main.py --help' for commands.", err=True)
+                sys.exit(1)
+
+            click.echo("\neSim Tool Manager Interactive Mode")
+            click.echo("Type 'help' for commands, 'exit' to quit.\n")
+
+            while True:
+                try:
+                    user_input = input("tool-manager> ")
+                    command = user_input.strip()
+
+                    if not command:
+                        continue
+
+                    if command.lower() in {"exit", "quit"}:
+                        click.echo("Exiting eSim Tool Manager")
+                        break
+
+                    if command.lower() in {"help", "?"}:
+                        cli.main(args=["--help"], prog_name="tool-manager", standalone_mode=False)
+                        continue
+
+                    try:
+                        args = shlex.split(command)
+                    except ValueError as e:
+                        click.echo(f"✗ Invalid command syntax: {str(e)}", err=True)
+                        continue
+
+                    cli.main(args=args, prog_name="tool-manager", standalone_mode=False)
+
+                except KeyboardInterrupt:
+                    click.echo("\nType 'exit' to quit")
+                except EOFError:
+                    click.echo("\nExiting eSim Tool Manager")
+                    break
+                except SystemExit:
+                    # Command handlers may call sys.exit; keep the shell running.
+                    continue
+                except click.Abort:
+                    click.echo("\nType 'exit' to quit")
+                except click.ClickException as e:
+                    e.show()
+        else:
+            cli()
     except KeyboardInterrupt:
         click.echo("\n\n✗ Operation cancelled by user")
         sys.exit(1)

@@ -5,12 +5,13 @@ Handles downloading, installing, and configuring tools
 
 import zipfile
 import subprocess
+import shlex
 from pathlib import Path
 from typing import Optional, Tuple, List
 from src.utils.logger import get_logger
 from src.utils.downloader import FileDownloader
 from src.utils.dependency_checker import DependencyChecker
-from src.utils.system_utils import EnvironmentManager, FileManager, PermissionManager
+from src.utils.system_utils import EnvironmentManager, ProcessManager
 from src.core.config_manager import ConfigManager
 
 class InstallationManager:
@@ -97,18 +98,21 @@ class InstallationManager:
             if not url:
                 self.logger.error(f"No download URL for {tool_name}")
                 return False
+
+            filename = tool_config.get("windows_filename", f"{tool_name}-{version}.zip")
             
             # Create temp directory
             self.temp_dir.mkdir(exist_ok=True)
             
-            # Construct full URL with version if needed
-            if "{version}" in url:
-                url = url.format(version=version)
+            # Construct full URL using placeholders or fallback conventions.
+            if "{" in url and "}" in url:
+                url = url.format(version=version, filename=filename, tool_name=tool_name)
+            elif url.lower().endswith((".zip", ".exe", ".msi")):
+                pass
             else:
-                url = f"{url}/{tool_name}-{version}-x64.zip"
+                url = f"{url.rstrip('/')}/{filename}"
             
             # Download file
-            filename = tool_config.get("windows_filename", f"{tool_name}-{version}.zip")
             destination = self.temp_dir / filename
             
             self.logger.info(f"Downloading from: {url}")
@@ -134,23 +138,59 @@ class InstallationManager:
         try:
             filename = tool_config.get("windows_filename", f"{tool_name}-{version}.zip")
             source_file = self.temp_dir / filename
+
+            if not source_file.exists():
+                self.logger.error(f"Installer file not found: {source_file}")
+                return False
             
             # Create installation directory
             install_dir = self.config_manager.get_installation_directory() / tool_name
             install_dir.mkdir(parents=True, exist_ok=True)
             
-            self.logger.info(f"Extracting to: {install_dir}")
-            
-            # Extract files
-            if source_file.suffix == ".zip":
+            file_suffix = source_file.suffix.lower()
+
+            if file_suffix == ".zip":
+                self.logger.info(f"Extracting to: {install_dir}")
                 with zipfile.ZipFile(source_file, 'r') as zip_ref:
                     zip_ref.extractall(install_dir)
+            elif file_suffix == ".exe":
+                installer_args = tool_config.get("windows_installer_args")
+                if installer_args is None:
+                    command = [str(source_file)]
+                elif isinstance(installer_args, str):
+                    command = [str(source_file)] + shlex.split(installer_args)
+                else:
+                    command = [str(source_file)] + list(installer_args)
+
+                self.logger.info(f"Running installer: {' '.join(command)}")
+                result = subprocess.run(command, check=False, capture_output=True, text=True)
+
+                if result.returncode not in (0, 3010):
+                    self.logger.error(
+                        f"Installer failed with exit code {result.returncode}: {result.stderr.strip() or result.stdout.strip()}"
+                    )
+                    return False
+            elif file_suffix == ".msi":
+                installer_args = tool_config.get("windows_installer_args", ["/qn", "/norestart"])
+                if isinstance(installer_args, str):
+                    extra_args = shlex.split(installer_args)
+                else:
+                    extra_args = list(installer_args)
+
+                command = ["msiexec", "/i", str(source_file)] + extra_args
+                self.logger.info(f"Running installer: {' '.join(command)}")
+                result = subprocess.run(command, check=False, capture_output=True, text=True)
+
+                if result.returncode not in (0, 3010):
+                    self.logger.error(
+                        f"MSI installer failed with exit code {result.returncode}: {result.stderr.strip() or result.stdout.strip()}"
+                    )
+                    return False
             else:
-                # For executables, we'd handle those differently
-                self.logger.info(f"Running installer: {source_file}")
-                # subprocess.run([str(source_file), "/S"], check=False)
+                self.logger.error(f"Unsupported installer type: {file_suffix}")
+                return False
             
-            self.logger.success(f"Installation files extracted to {install_dir}")
+            self.logger.success(f"Installation process completed for {tool_name}")
             return True
             
         except Exception as e:
@@ -164,11 +204,15 @@ class InstallationManager:
             
             # Add to PATH
             if tool_config.get("path_to_executable"):
-                executable_path = install_dir / tool_config["path_to_executable"]
+                executable_cfg = Path(tool_config["path_to_executable"])
+                executable_path = executable_cfg if executable_cfg.is_absolute() else install_dir / executable_cfg
                 executable_dir = executable_path.parent
-                
-                self.logger.info(f"Adding to PATH: {executable_dir}")
-                EnvironmentManager.add_to_path(str(executable_dir))
+
+                if executable_dir.exists():
+                    self.logger.info(f"Adding to PATH: {executable_dir}")
+                    EnvironmentManager.add_to_path(str(executable_dir))
+                else:
+                    self.logger.warning(f"Skipping PATH update; directory not found: {executable_dir}")
             
             # Set environment variable if specified
             if tool_config.get("env_var_name"):
@@ -186,21 +230,40 @@ class InstallationManager:
         """Verify tool installation"""
         try:
             install_dir = self.config_manager.get_installation_directory() / tool_name
-            
-            # Check if installation directory exists
-            if not install_dir.exists():
-                self.logger.error(f"Installation directory not found: {install_dir}")
-                return False
-            
-            # Check if executable exists
-            if tool_config.get("path_to_executable"):
-                executable_path = install_dir / tool_config["path_to_executable"]
-                if not executable_path.exists():
-                    self.logger.error(f"Executable not found: {executable_path}")
-                    return False
-            
-            self.logger.success(f"{tool_name} installation verified")
-            return True
+
+            executable_path = None
+            executable_cfg = tool_config.get("path_to_executable")
+            if executable_cfg:
+                configured_path = Path(executable_cfg)
+                executable_path = configured_path if configured_path.is_absolute() else install_dir / configured_path
+                if executable_path.exists():
+                    self.logger.success(f"Verified executable at {executable_path}")
+                    return True
+
+            # Fallback: verify by command availability.
+            command_name = tool_config.get("command_name") or tool_name
+            if ProcessManager.is_command_available(command_name):
+                command_path = ProcessManager.get_command_path(command_name)
+                self.logger.success(f"Verified command '{command_name}' at {command_path}")
+                return True
+
+            # Optional explicit paths to check for installer-based tools.
+            for candidate in tool_config.get("verification_paths", []):
+                candidate_path = Path(candidate)
+                if candidate_path.exists():
+                    self.logger.success(f"Verified installation via path {candidate_path}")
+                    return True
+
+            # If no executable path is configured, at least require install directory to exist.
+            if not executable_cfg and install_dir.exists():
+                self.logger.success(f"Verified installation directory at {install_dir}")
+                return True
+
+            if executable_path:
+                self.logger.error(f"Executable not found: {executable_path}")
+            else:
+                self.logger.error(f"Could not verify installation for {tool_name}")
+            return False
             
         except Exception as e:
             self.logger.error(f"Verification failed: {str(e)}", e)

@@ -1,0 +1,65 @@
+[
+  {
+    "timestamp": "2026-04-13T20:25:15.871008",
+    "level": "INFO",
+    "message": "eSim Tool Manager started",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:25:26.924481",
+    "level": "INFO",
+    "message": "Starting installation of kicad...",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:25:26.927619",
+    "level": "INFO",
+    "message": "Checking dependencies for kicad...",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:25:26.928988",
+    "level": "INFO",
+    "message": "Checking dependencies for kicad...",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:25:26.937572",
+    "level": "SUCCESS",
+    "message": "All dependencies for kicad are satisfied",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:25:26.938600",
+    "level": "INFO",
+    "message": "Installing kicad version 10.0.0-1...",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:25:26.940771",
+    "level": "INFO",
+    "message": "Downloading from: https://kicad-downloads.s3.cern.ch/windows/stable/kicad-10.0.0-1-x86_64.exe",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:25:26.940771",
+    "level": "INFO",
+    "message": "Downloading: https://kicad-downloads.s3.cern.ch/windows/stable/kicad-10.0.0-1-x86_64.exe",
+    "details": {},
+    "exception": null
+  },
+  {
+    "timestamp": "2026-04-13T20:28:10.569068",
+    "level": "INFO",
+    "message": "Cleaned up temporary files",
+    "details": {},
+    "exception": null
+  }
+]
