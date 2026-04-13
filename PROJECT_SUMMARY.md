@@ -150,9 +150,9 @@ Fully implemented Python prototype with:
 ```
 Available Commands:
 ├── install <tool> [--version V]    - Install a tool
-├── update [--all | --tool T]       - Update tools
-├── check-updates                   - Check available updates
-├── list                            - List all tools
+├── update [<tool> | --all]         - Update tools
+├── checks-updates                  - Check available updates
+├── list-tools                      - List all tools
 ├── status <tool>                   - Show tool status
 ├── uninstall <tool>               - Remove a tool
 ├── dependencies <tool>             - Show tool dependencies
@@ -306,7 +306,7 @@ pip install -r requirements.txt
 
 # Run
 python main.py --help
-python main.py list
+python main.py list-tools
 python main.py system-info
 
 # Test Installation

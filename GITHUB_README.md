@@ -68,13 +68,16 @@ See [EXECUTION_INSTRUCTIONS.md](EXECUTION_INSTRUCTIONS.md) for detailed setup in
 ## Usage
 ```bash
 # List available tools
-python main.py list
+python main.py list-tools
 
 # Install tools
 python main.py install ngspice --version 39
 
 # Check for updates
-python main.py check-updates
+python main.py checks-updates
+
+# Interactive mode
+python main.py
 
 # Update tools
 python main.py update --all
@@ -89,8 +92,8 @@ python main.py logs --last 20
 ## Available Commands
 - `install <tool>` - Install a tool
 - `update [--all]` - Update  tools
-- `check-updates` - Check available updates
-- `list` - List tools
+- `checks-updates` - Check available updates
+- `list-tools` - List tools
 - `status <tool>` - Show tool status
 - `uninstall <tool>` - Remove a tool
 - `dependencies <tool>` - Show dependencies

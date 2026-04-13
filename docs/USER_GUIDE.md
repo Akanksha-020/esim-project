@@ -27,6 +27,19 @@ python main.py install --help
 python main.py update --help
 ```
 
+### Interactive Mode
+
+Run without arguments to open an interactive prompt:
+
+```bash
+python main.py
+
+# Example session
+tool-manager> list-tools
+tool-manager> status ngspice
+tool-manager> exit
+```
+
 ## Commands
 
 ### List Tools
@@ -34,7 +47,7 @@ python main.py update --help
 View all available and installed tools:
 
 ```bash
-python main.py list
+python main.py list-tools
 ```
 
 **Output Example**:
@@ -43,7 +56,7 @@ python main.py list
 │ Tool    │ Current Ver  │ Latest Ver   │ Status       │ Description            │
 ├─────────┼──────────────┼──────────────┼──────────────┼────────────────────────┤
 │ ngspice │ 39           │ 40           │ Installed    │ Circuit simulator      │
-│ kicad   │ None         │ 7.0.2        │ Not installed│ PCB design software    │
+│ kicad   │ None         │ 10.0.0-1     │ Not installed│ PCB design software    │
 └─────────┴──────────────┴──────────────┴──────────────┴────────────────────────┘
 ```
 
@@ -59,14 +72,14 @@ python main.py install ngspice
 python main.py install ngspice --version 39
 
 # Install with version shorthand
-python main.py install kicad -v 7.0.0
+python main.py install kicad -v 10.0.0-1
 ```
 
 **Process**:
 1. ✓ Software validates tool configuration
 2. ✓ Downloads tool from configured URL
 3. ✓ Verifies file integrity (if checksum available)
-4. ✓ Extracts and installs files
+4. ✓ Installs package (`.zip` extraction or `.exe`/`.msi` installer execution)
 5. ✓ Configures environment variables
 6. ✓ Verifies installation success
 
@@ -76,7 +89,7 @@ View available updates for installed tools:
 
 ```bash
 # Check all tools
-python main.py check-updates
+python main.py checks-updates
 
 # Interactive update
 python main.py update --all
@@ -94,21 +107,18 @@ Updates Available: 1
 Tool                 Current        Latest         Status
 ────────────────────────────────────────────────────────
 Ngspice              39             40             ⚠ Update available
-KiCad                7.0.0          7.0.0          ✓ Up to date
+KiCad                9.0.0          10.0.0-1       ⚠ Update available
 Python               3.11.7         3.11.8         ✓ Up to date
 ============================================================
 ```
 
 ### Update Tools
 
-Update tool(s) to latest or specific version:
+Update a specific tool to its configured latest version, or update all tools:
 
 ```bash
 # Update specific tool
 python main.py update ngspice
-
-# Update to specific version
-python main.py update ngspice --version 40
 
 # Update all tools with updates
 python main.py update --all
@@ -236,7 +246,7 @@ Setup eSim tools from scratch:
 
 ```bash
 # Step 1: See what's available
-python main.py list
+python main.py list-tools
 
 # Step 2: Install main tools
 python main.py install ngspice
@@ -247,7 +257,7 @@ python main.py status ngspice
 python main.py status kicad
 
 # Step 4: Check updates
-python main.py check-updates
+python main.py checks-updates
 ```
 
 ### Workflow 2: Update Everything
@@ -256,7 +266,7 @@ Keep all tools current:
 
 ```bash
 # Step 1: Check available updates
-python main.py check-updates
+python main.py checks-updates
 
 # Step 2: Update all with one command
 python main.py update --all
@@ -293,7 +303,7 @@ Add a new tool to the manager:
 3. Run:
 
 ```bash
-python main.py list  # Verify tool appears
+python main.py list-tools  # Verify tool appears
 python main.py install <tool_name>
 ```
 

@@ -97,7 +97,14 @@ config/
 ### 1. Check Available Tools
 
 ```bash
-python main.py list
+python main.py list-tools
+```
+
+### 1.1 Interactive Mode (Optional)
+
+```bash
+python main.py
+# Then type: list-tools, checks-updates, exit
 ```
 
 ### 2. Install Your First Tool

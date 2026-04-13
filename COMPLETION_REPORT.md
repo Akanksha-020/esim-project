@@ -239,11 +239,11 @@ esim-tool-manager/                    # Root directory
 python main.py install <tool> [--version V]      # Install tool
 
 # Update Management  
-python main.py update [--all | --tool T]         # Update tools
-python main.py check-updates                     # Check updates
+python main.py update [<tool> | --all]           # Update tools
+python main.py checks-updates                    # Check updates
 
 # Tool Management
-python main.py list                              # List all tools
+python main.py list-tools                        # List all tools
 python main.py status <tool>                     # Show tool status
 python main.py uninstall <tool>                  # Remove tool
 

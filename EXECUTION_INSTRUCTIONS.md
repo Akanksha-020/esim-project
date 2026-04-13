@@ -100,7 +100,19 @@ python main.py --help
 # Get command-specific help
 python main.py install --help
 python main.py update --help
-python main.py list --help
+python main.py list-tools --help
+```
+
+### Using Interactive Mode
+
+```bash
+# Start interactive shell
+python main.py
+
+# Example session
+tool-manager> list-tools
+tool-manager> checks-updates
+tool-manager> exit
 ```
 
 ### Basic Operations
@@ -108,7 +120,7 @@ python main.py list --help
 #### 5.1 List Available Tools
 
 ```bash
-python main.py list
+python main.py list-tools
 
 # Output shows all configured tools and their status
 ```
@@ -142,7 +154,7 @@ python main.py status ngspice
 
 ```bash
 # Check available updates for all tools
-python main.py check-updates
+python main.py checks-updates
 
 # Shows table with current vs latest versions
 ```
@@ -234,14 +246,14 @@ python main.py uninstall ngspice
 Run through this checklist to verify all features work:
 
 #### Installation Management
-- [ ] `list` command displays all tools
+- [ ] `list-tools` command displays all tools
 - [ ] `install` command downloads tool
 - [ ] `status` command shows tool status
 - [ ] `uninstall` command removes tool
 - [ ] Version control works (`--version` flag)
 
 #### Update and Upgrade System
-- [ ] `check-updates` shows available updates
+- [ ] `checks-updates` shows available updates
 - [ ] `update` command upgrades tool
 - [ ] Version comparison works correctly
 - [ ] Logs track update operations
@@ -312,7 +324,7 @@ Edit `config/tools.json`:
 Test new tool:
 
 ```bash
-python main.py list  # Should show my_tool
+python main.py list-tools  # Should show my_tool
 python main.py install my_tool  # Try to install
 ```
 
@@ -383,7 +395,7 @@ Test the full workflow:
 
 ```bash
 # 1. List available tools
-python main.py list
+python main.py list-tools
 
 # 2. Install primary tool
 python main.py install ngspice
@@ -392,7 +404,7 @@ python main.py install ngspice
 python main.py status ngspice
 
 # 4. Check for updates
-python main.py check-updates
+python main.py checks-updates
 
 # 5. View logs of all operations
 python main.py logs --last 20

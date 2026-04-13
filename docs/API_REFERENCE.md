@@ -88,6 +88,12 @@ success = installer.install_tool("ngspice", "39")
 success = installer.install_tool("ngspice")
 ```
 
+Installer behavior notes:
+- Supports `.zip` packages (extract into managed install directory)
+- Supports `.exe` and `.msi` installers (runs installer process)
+- Resolves download URL templates with `{version}`, `{filename}`, and `{tool_name}` placeholders
+- Verifies install via configured executable path, command lookup, or verification paths
+
 **`uninstall_tool(tool_name: str) -> bool`**
 ```python
 success = installer.uninstall_tool("ngspice")
@@ -117,7 +123,7 @@ updater = UpdateChecker(config_dir="./config")
 updates = updater.check_updates()
 # Returns: {
 #     "ngspice": {"current": "39", "latest": "40", "available": True},
-#     "kicad": {"current": "7.0.0", "latest": "7.0.0", "available": False}
+#     "kicad": {"current": "9.0.0", "latest": "10.0.0-1", "available": True}
 # }
 ```
 
@@ -337,8 +343,12 @@ result = ProcessManager.run_command("ngspice --version")
       "current_version": "1.0.0",
       "latest_version": "1.0.0",
       "windows_download_url": "https://...",
+    "windows_filename": "tool-installer.exe",
       "dependencies": [],
-      "path_to_executable": "bin/tool.exe",
+    "path_to_executable": "bin/tool.exe",
+    "command_name": "tool",
+    "verification_paths": ["C:/Program Files/Tool/bin/tool.exe"],
+    "windows_installer_args": ["/S"],
       "env_var_name": "TOOL_PATH",
       "installed": false,
       "install_path": null,
@@ -389,7 +399,7 @@ if config.get_tool_config("ngspice"):
         print("Installation failed!")
 ```
 
-###Example 2: Check and Install Updates
+### Example 2: Check and Install Updates
 
 ```python
 from src.core import UpdateChecker

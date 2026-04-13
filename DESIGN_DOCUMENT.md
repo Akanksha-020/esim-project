@@ -93,9 +93,9 @@ The **eSim Automated Tool Manager** is a comprehensive Python-based application 
 - **Purpose**: User-friendly command-line interface
 - **Commands**:
   - `tmgr install <tool> [--version V]`: Install a tool
-  - `tmgr update [--all | --tool T]`: Update tools
-  - `tmgr list`: Show installed tools and versions
-  - `tmgr check-updates`: Check available updates
+  - `tmgr update [<tool> | --all]`: Update tools
+  - `tmgr list-tools`: Show installed tools and versions
+  - `tmgr checks-updates`: Check available updates
   - `tmgr status <tool>`: Show tool status
   - `tmgr logs [--last N]`: Display action logs
   - `tmgr config <tool>`: Show/edit tool configuration
@@ -158,9 +158,9 @@ Verify Update → Log Action
     "kicad": {
       "name": "KiCad",
       "description": "PCB design software",
-      "current_version": "7.0.0",
-      "latest_version": "7.0.0",
-      "windows_download_url": "https://kicad.org/download/windows/",
+      "current_version": null,
+      "latest_version": "10.0.0-1",
+      "windows_download_url": "https://kicad-downloads.s3.cern.ch/windows/stable/{filename}",
       "dependencies": [],
       "installed": false,
       "install_path": null
@@ -203,14 +203,14 @@ InstallationMgr → CLI: Installation complete
 
 ### 5.2 Sequence Diagram - Update
 ```
-User → CLI: check-updates
+User → CLI: checks-updates
 CLI → UpdateChecker: check_updates()
 UpdateChecker → RepositoryAPI: get_latest_versions()
 UpdateChecker → Logger: log_action("Updates checked")
 UpdateChecker → CLI: Display available updates
-User → CLI: update ngspice --version 40
-CLI → UpdateChecker: perform_update("ngspice", "40")
-UpdateChecker → InstallationMgr: install_tool("ngspice", "40")
+User → CLI: update ngspice
+CLI → UpdateChecker: perform_update("ngspice", None)
+UpdateChecker → InstallationMgr: install_tool("ngspice", latest)
 (Installation flow continues...)
 UpdateChecker → Logger: log_action("Update completed")
 ```

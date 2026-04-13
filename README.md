@@ -15,6 +15,7 @@ eSim Tool Manager automates the installation, configuration, updates, and depend
 ✅ **Configuration Management** - Automate tool setup and environment variable configuration  
 ✅ **Dependency Checker** - Validate dependencies and alert on missing/incompatible versions  
 ✅ **CLI Interface** - User-friendly command-line tool for all operations  
+✅ **Interactive Mode** - Run without arguments and execute commands in a live prompt  
 ✅ **Action Logging** - Comprehensive logging of all operations for audit and debugging  
 ✅ **Cross-Platform Ready** - Windows focus with Linux/macOS extensibility  
 
@@ -47,13 +48,13 @@ python main.py --version
 python main.py install ngspice --version 39
 
 # Check for available updates
-python main.py check-updates
+python main.py checks-updates
 
 # Update all tools
 python main.py update --all
 
 # List installed tools
-python main.py list
+python main.py list-tools
 
 # View tool status
 python main.py status ngspice
@@ -63,6 +64,10 @@ python main.py logs --last 10
 
 # Get help
 python main.py --help
+
+# Interactive mode
+python main.py
+# Then type commands such as: list-tools, checks-updates, exit
 ```
 
 ## Project Structure
@@ -162,19 +167,19 @@ $ python main.py install ngspice --version 39
 
 ### Example 2: Check Updates
 ```bash
-$ python main.py check-updates
+$ python main.py checks-updates
 Checking for updates...
 ┌─────────────────────────────────────────────────┐
 │ Tool      │ Current │ Latest │ Update Available │
 ├─────────────────────────────────────────────────┤
 │ Ngspice   │ 39      │ 40     │ Yes               │
-│ KiCad     │ 7.0.0   │ 7.0.0  │ No                │
+│ KiCad     │ 9.0.0   │ 10.0.0-1 │ Yes             │
 └─────────────────────────────────────────────────┘
 ```
 
 ### Example 3: Update Tool
 ```bash
-$ python main.py update ngspice --version 40
+$ python main.py update ngspice
 [INFO] Backing up current installation...
 [INFO] Downloading ngspice v40...
 [INFO] Installing update...
