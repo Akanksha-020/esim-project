@@ -361,25 +361,6 @@ pytest tests/ --cov=src --cov-report=html
 4. **Monitor** → Check logs and status regularly
 5. **Update** → `python main.py update --all`
 
-## Support & Contact
-
-- 📧 **Email**: contact-esim@fossee.in
-- 📋 **GitHub**: https://github.com/Eyantra698Sumanto
-- 📚 **Documentation**: See docs/ folder
-- 🐛 **Issues**: Check logs with `python main.py logs`
-
-## License
-
-MIT License - Open source for eSim community
-
-## Version
-
-**Current**: 1.0.0 (Beta/PoC)  
-**Status**: Ready for Submission  
-**Last Updated**: April 5, 2026  
-
----
-
 ## Summary
 
 The **eSim Automated Tool Manager** is a fully functional prototype that demonstrates:
@@ -391,7 +372,6 @@ The **eSim Automated Tool Manager** is a fully functional prototype that demonst
 ✅ **Extensibility**: Easy to add new tools and features
 ✅ **User Experience**: Intuitive CLI with helpful feedback
 
-The project is ready for evaluation and can be submitted to the eSim team with full confidence in its capabilities and code quality.
 
 ---
 
