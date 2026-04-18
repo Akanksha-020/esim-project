@@ -482,15 +482,4 @@ If you encounter issues:
 - ✅ Code Documentation
 - ✅ Test Suite
 
-## Next Steps
 
-1. **Push to GitHub**: Create private repository and push code
-2. **Share Access**: Give access to https://github.com/Eyantra698Sumanto
-3. **Submit**: Email link and report to contact-esim@fossee.in
-4. **Subject**: "eSim Summer Fellowship 2026 Submission Task 5"
-
----
-
-**Version**: 1.0.0  
-**Last Updated**: April 2026  
-**Status**: Ready for Execution
