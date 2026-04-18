@@ -257,15 +257,6 @@ python -m pytest tests/test_installer.py -v
 python -m pytest tests/ --cov=src
 ```
 
-## Contributing
-
-Contributions are welcome! Please:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ## Documenta
 
@@ -275,31 +266,20 @@ See the `docs/` directory for:
 - [API Reference](docs/API_REFERENCE.md)
 - [Development Guide](docs/DEVELOPMENT.md)
 
-## License
 
-This project is licensed under MIT License - see LICENSE file for details.
 
-## Support
-
-For issues, questions, or suggestions:
-- 📧 Email: contact-esim@fossee.in
-- 🐛 Issues: GitHub Issues
-- 💬 Discussions: GitHub Discussions
 
 ## Authors
 
-- **Developer**: eSim Summer Fellowship 2026 Participant
+- **Developer**: Akanksha Shrivastava
 - **Project**: eSim Automated Tool Manager
-- **Organization**: FOSSEE, IIT Bombay
+- **Organization**: VIT Bhopal University
 
 ## Acknowledgments
 
-- eSim Project Team
 - FOSSEE Initiative
 - Open-source tool developers (Ngspice, KiCad, etc.)
 
 ---
 
-**Version**: 1.0.0-beta  
-**Last Updated**: April 2026  
-**Status**: Prototype/PoC Phase
+
