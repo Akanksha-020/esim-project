@@ -124,22 +124,6 @@ pytest tests/ -v
 pytest tests/ --cov=src
 ```
 
-## License
-MIT License
 
-## Version
-1.0.0-beta (Ready for Evaluation)
 
-## Contact
-- Email: contact-esim@fossee.in
-- GitHub: https://github.com/Eyantra698Sumanto
 
-## Acknowledgments
-- eSim Project Team
-- FOSSEE Initiative, IIT Bombay
-
----
-
-For detailed information, see the complete documentation in the `docs/` folder and DESIGN_DOCUMENT.md.
-
-**Last Updated**: April 2026
